@@ -2,19 +2,22 @@ import pytest
 from mems import MemeCollection
 
 
+def _clear_collection(collection):
+    while collection.memes:
+        collection.clear()
+
+
 @pytest.fixture
 def cleanup_collection():
     collections = []
     yield collections
     for collection in collections:
-        collection.memes.clear()
+        _clear_collection(collection)
 
 
 @pytest.fixture
-def empty_collection(cleanup_collection):
-    collection = MemeCollection()
-    cleanup_collection.append(collection)
-    return collection
+def empty_collection():
+    return MemeCollection()
 
 
 @pytest.fixture
